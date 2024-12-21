@@ -31,7 +31,7 @@ Before running the application, ensure you have the following:
 ## Installation
 1. Clone this repository:
    ```bash
-   git clone 
+   git clone https://github.com/trynayash/youtube-data-scrapping.git
 2. Navigate to the project directory:
    ```bash
    cd youtube-data-scraping
