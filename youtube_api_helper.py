@@ -1,7 +1,7 @@
 from googleapiclient.discovery import build
 import pandas as pd
 
-API_KEY = 'AIzaSyC7l4HB7pyn2aOA38vIW0GlDFFH3Jpb0qg'
+API_KEY = ''
 
 import requests
 
