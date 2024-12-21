@@ -6,7 +6,7 @@ API_KEY = ''
 import requests
 
 def fetch_video_details(genre, max_results=500):
-    API_KEY = 'AIzaSyC7l4HB7pyn2aOA38vIW0GlDFFH3Jpb0qg'
+    API_KEY = ''
     BASE_URL = "https://www.googleapis.com/youtube/v3/search"
     video_details = []
     page_token = None
