@@ -1,12 +1,16 @@
 from googleapiclient.discovery import build 
 import pandas as pd
 
+
 API_KEY = ''  # Replace with your actual API key
+API_KEY = ''
 
 import requests
 
 def fetch_video_details(genre, max_results=500):
+
     API_KEY = ''  # Ensure API key is defined
+    API_KEY = ''
     BASE_URL = "https://www.googleapis.com/youtube/v3/search"
     video_details = []
     page_token = None
