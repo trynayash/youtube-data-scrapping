@@ -1,12 +1,12 @@
-from googleapiclient.discovery import build
+from googleapiclient.discovery import build 
 import pandas as pd
 
-API_KEY = 'AIzaSyC7l4HB7pyn2aOA38vIW0GlDFFH3Jpb0qg'
+API_KEY = ''  # Replace with your actual API key
 
 import requests
 
 def fetch_video_details(genre, max_results=500):
-    API_KEY = 'AIzaSyC7l4HB7pyn2aOA38vIW0GlDFFH3Jpb0qg'
+    API_KEY = ''  # Ensure API key is defined
     BASE_URL = "https://www.googleapis.com/youtube/v3/search"
     video_details = []
     page_token = None
@@ -33,7 +33,6 @@ def fetch_video_details(genre, max_results=500):
         
     return video_details
 
-
 def extract_video_info(item):
     snippet = item['snippet']
     video_info = {
@@ -43,11 +42,30 @@ def extract_video_info(item):
         'channel_title': snippet['channelTitle'],
         'tags': snippet.get('tags', []),
         'category': snippet.get('categoryId'),
+        'topic_details': snippet.get('topicDetails', {}).get('topicCategories', []),
         'published_at': snippet['publishedAt'],
         'duration': snippet.get('duration'),
         'view_count': snippet.get('viewCount', 0),
-        'comment_count': snippet.get('commentCount', 0),
-        'captions_available': True if snippet.get('language') else False,
-        'location': 'Mumbai'  # You need to fetch location separately if needed
+        'comment_count': item.get('statistics', {}).get('commentCount', 0),  # Using statistics for comment count
+        'captions_available': 'true' if snippet.get('language') else 'false',
+        'caption_text': fetch_captions(item['id']['videoId']) if snippet.get('language') else '',
+        'location': 'Mumbai'  # Example fixed location; can be dynamic based on your use case
     }
     return video_info
+
+
+
+def fetch_captions(video_id):
+    BASE_CAPTION_URL = f"https://www.googleapis.com/youtube/v3/captions"
+    params = {
+        'id': video_id,
+        'key': API_KEY,
+        'part': 'snippet',
+        'tfmt': 'srt'  # Fetch captions in srt format
+    }
+    response = requests.get(BASE_CAPTION_URL, params=params)
+    data = response.json()
+    if 'items' in data:
+        caption_item = data['items'][0]
+        return caption_item['snippet']['body']
+    return ''
